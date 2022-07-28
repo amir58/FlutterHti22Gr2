@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/login_screen.dart';
+import 'package:untitled/messenger.dart';
 import 'package:untitled/second_screen.dart';
 import 'package:untitled/stack_screen.dart';
 import 'package:untitled/third_screen.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: StackScreen(),
+      home: MessengerScreen(),
     );
   }
 }
