@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MessengerScreen extends StatelessWidget {
-  const MessengerScreen({Key? key}) : super(key: key);
+  MessengerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,14 @@ class MessengerScreen extends StatelessWidget {
             buildCustomAppBar(),
             buildSearchItem(),
             buildStoriesRow(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: chats.length,
+                itemBuilder: (context, index) {
+                  return buildChatItem(index);
+                },
+              ),
+            )
           ],
         ),
       )),
@@ -142,4 +150,106 @@ class MessengerScreen extends StatelessWidget {
       ),
     );
   }
+
+  List<ChatData> chats = [
+    ChatData(
+      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mohamed_Salah_2018.jpg",
+      username: "Amir Mohammed",
+      message: "Where are you ?",
+      dateTime: "now",
+      opened: false,
+      online: true,
+    ),
+    ChatData(
+      imageUrl: "https://ichef.bbci.co.uk/news/976/cpsprodpb/15E47/production/_124717698_gettyimages-1395200655.jpg",
+      username: "Ali Ahmed",
+      message: "I'm waiting you!",
+      dateTime: "10m",
+      opened: true,
+      online: false,
+    ),
+
+  ];
+
+  Widget buildChatItem(int index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomEnd,
+            children:  [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(
+                    chats[index].imageUrl),
+              ),
+              const CircleAvatar(
+                radius: 9,
+                backgroundColor: Colors.white,
+              ),
+              CircleAvatar(
+                radius: 8,
+                backgroundColor: chats[index].online ? Colors.green : Colors.red,
+              ),
+            ],
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Text(
+                  chats[index].username,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 3),
+                Row(
+                  children:  [
+                    Text(
+                      chats[index].message,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Text(chats[index].dateTime),
+                  ],
+                ),
+              ],
+            ),
+          ),
+           Visibility(
+            visible: chats[index].opened,
+            child: const CircleAvatar(
+              backgroundColor: Colors.blue,
+              radius: 8,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ChatData {
+  String imageUrl;
+  String username;
+  String message;
+  String dateTime;
+  bool opened;
+  bool online;
+
+  ChatData({
+    required this.imageUrl,
+    required this.username,
+    required this.message,
+    required this.dateTime,
+    required this.opened,
+    required this.online,
+  });
 }
