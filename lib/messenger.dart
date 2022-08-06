@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/widgets/my_circle_icon_button.dart';
 
 class MessengerScreen extends StatelessWidget {
   MessengerScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class MessengerScreen extends StatelessWidget {
       children: [
         const CircleAvatar(
           radius: 22,
-          backgroundImage: NetworkImage(
+          backgroundImage: const NetworkImage(
               "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mohamed_Salah_2018.jpg"),
         ),
         const SizedBox(width: 10),
@@ -46,23 +47,20 @@ class MessengerScreen extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        buildTopIconButton(Icons.camera_alt_rounded),
-        const SizedBox(width: 10),
-        buildTopIconButton(Icons.edit),
-      ],
-    );
-  }
-
-  Widget buildTopIconButton(IconData icon) {
-    return CircleAvatar(
-      backgroundColor: Colors.grey[300],
-      child: IconButton(
-        onPressed: () {},
-        icon: Icon(
-          icon,
-          color: Colors.black,
+        MyCircleIconButton(
+          icon: Icons.camera_alt_rounded,
+          onPressed: () {
+            print('Camera');
+          },
         ),
-      ),
+        const SizedBox(width: 10),
+        MyCircleIconButton(
+          icon: Icons.edit,
+          onPressed: () {
+            print('Edit');
+          },
+        ),
+      ],
     );
   }
 
@@ -153,7 +151,8 @@ class MessengerScreen extends StatelessWidget {
 
   List<ChatData> chats = [
     ChatData(
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mohamed_Salah_2018.jpg",
+      imageUrl:
+          "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mohamed_Salah_2018.jpg",
       username: "Amir Mohammed",
       message: "Where are you ?",
       dateTime: "now",
@@ -161,14 +160,14 @@ class MessengerScreen extends StatelessWidget {
       online: true,
     ),
     ChatData(
-      imageUrl: "https://ichef.bbci.co.uk/news/976/cpsprodpb/15E47/production/_124717698_gettyimages-1395200655.jpg",
+      imageUrl:
+          "https://ichef.bbci.co.uk/news/976/cpsprodpb/15E47/production/_124717698_gettyimages-1395200655.jpg",
       username: "Ali Ahmed",
       message: "I'm waiting you!",
       dateTime: "10m",
       opened: true,
       online: false,
     ),
-
   ];
 
   Widget buildChatItem(int index) {
@@ -178,11 +177,10 @@ class MessengerScreen extends StatelessWidget {
         children: [
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
-            children:  [
+            children: [
               CircleAvatar(
                 radius: 30,
-                backgroundImage: NetworkImage(
-                    chats[index].imageUrl),
+                backgroundImage: NetworkImage(chats[index].imageUrl),
               ),
               const CircleAvatar(
                 radius: 9,
@@ -190,7 +188,8 @@ class MessengerScreen extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 8,
-                backgroundColor: chats[index].online ? Colors.green : Colors.red,
+                backgroundColor:
+                    chats[index].online ? Colors.green : Colors.red,
               ),
             ],
           ),
@@ -199,7 +198,7 @@ class MessengerScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(
+                Text(
                   chats[index].username,
                   style: const TextStyle(
                       color: Colors.black,
@@ -208,22 +207,22 @@ class MessengerScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Row(
-                  children:  [
+                  children: [
                     Text(
                       chats[index].message,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Text(chats[index].dateTime),
                   ],
                 ),
               ],
             ),
           ),
-           Visibility(
+          Visibility(
             visible: chats[index].opened,
             child: const CircleAvatar(
               backgroundColor: Colors.blue,
