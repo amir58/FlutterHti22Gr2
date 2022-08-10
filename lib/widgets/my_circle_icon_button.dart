@@ -5,10 +5,12 @@ class MyCircleIconButton extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.onPressed,
+    this.color= Colors.black,
   }) : super(key: key);
 
   final IconData icon;
   final VoidCallback onPressed;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class MyCircleIconButton extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           icon,
-          color: Colors.black,
+          color: color,
         ),
       ),
     );

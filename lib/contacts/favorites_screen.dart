@@ -1,67 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/widgets/my_circle_icon_button.dart';
 
-class MyContact{
+class MyContact {
   String name;
   String phone;
 
   MyContact(this.name, this.phone);
 }
 
-class MyListViewScreen extends StatelessWidget {
-  MyListViewScreen({Key? key}) : super(key: key);
+class FavoritesScreen extends StatelessWidget {
+  FavoritesScreen({Key? key}) : super(key: key);
 
-  List<MyContact> contacts =[
-    MyContact("Amir", "01116036522"),
+  List<MyContact> contacts = [
     MyContact("Ali", "01116326522"),
-    MyContact("Ahmed", "01116032146"),
     MyContact("Salah", "01239603777"),
   ];
-
-  // List<String> names = [
-  //   "Amir",
-  //   "Ali",
-  //   "Ahmed",
-  //   "Mohammed",
-  //   "Mahmoud",
-  //   "Samir",
-  //   "Saher",
-  //   "Saleh",
-  //   "Salah"
-  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('ListView'),
-        ),
         body: ListView.builder(
-          itemCount: contacts.length,
-          itemBuilder: (context, index) {
-            return  Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(15)
+      itemCount: contacts.length,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.grey[200], borderRadius: BorderRadius.circular(15)),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      contacts[index].name,
+                      style: TextStyle(fontSize: 33),
+                    ),
+                    Text(
+                      contacts[index].phone,
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    contacts[index].name,
-                    style: TextStyle(fontSize: 33),
-                  ),
-                  Text(
-                    contacts[index].phone,
-                    style: TextStyle(fontSize: 22),
-                  ),
-
-                ],
+              MyCircleIconButton(
+                icon: Icons.favorite,
+                color: Colors.blue,
+                onPressed: () {},
               ),
-            );
-          },
-        ));
+            ],
+          ),
+        );
+      },
+    ));
   }
 
   Widget buildChatItem() {

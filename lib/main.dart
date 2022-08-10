@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/assets.dart';
 import 'package:untitled/bmi/bmi_screen.dart';
+import 'package:untitled/contacts/contacts_main_screen.dart';
 import 'package:untitled/login_screen.dart';
 import 'package:untitled/messenger.dart';
 import 'package:untitled/second_screen.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: ContactsMainScreen(),
     );
   }
 }
