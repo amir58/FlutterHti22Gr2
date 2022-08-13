@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:untitled/contacts/contacts_cubit.dart';
 import 'package:untitled/contacts/contacts_screen.dart';
 import 'package:untitled/contacts/favorites_screen.dart';
+import 'package:untitled/utils/navigator.dart';
 
 class ContactsMainScreen extends StatefulWidget {
   const ContactsMainScreen({Key? key}) : super(key: key);
@@ -12,22 +15,6 @@ class ContactsMainScreen extends StatefulWidget {
 
 class _ContactsMainScreenState extends State<ContactsMainScreen> {
   // database
-
-  void createDatabase() async {
-    // open the database
-    Database database = await openDatabase(
-      "contactsDatabase",
-      version: 1,
-      onCreate: (Database db, int version) async {
-        // When creating the db, create the table
-        await db.execute(
-            'CREATE TABLE Test (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, num REAL)');
-      },
-      onOpen: (Database database){
-
-      }
-    );
-  }
 
   // database
 
@@ -42,6 +29,12 @@ class _ContactsMainScreenState extends State<ContactsMainScreen> {
 
   var nameController = TextEditingController();
   var phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ContactsCubit>().createDatabase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +162,15 @@ class _ContactsMainScreenState extends State<ContactsMainScreen> {
                       String name = nameController.text;
 
                       String phone = phoneController.text;
+
+                      context.read<ContactsCubit>().insertContact(
+                            contactName: name,
+                            contactPhone: phone,
+                          );
+
+                      nameController.clear();
+                      phoneController.clear();
+
                       Navigator.pop(context);
                     }
                   },

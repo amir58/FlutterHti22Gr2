@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/assets.dart';
 import 'package:untitled/bmi/bmi_screen.dart';
+import 'package:untitled/contacts/contacts_cubit.dart';
 import 'package:untitled/contacts/contacts_main_screen.dart';
 import 'package:untitled/login_screen.dart';
 import 'package:untitled/messenger.dart';
 import 'package:untitled/second_screen.dart';
+import 'package:untitled/simple_bloc/counter.dart';
 import 'package:untitled/stack_screen.dart';
 import 'package:untitled/third_screen.dart';
 
@@ -21,7 +24,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ContactsMainScreen(),
+      home: BlocProvider(
+        create: (context) => ContactsCubit(),
+        child: ContactsMainScreen(),
+      ),
     );
   }
 }
@@ -45,7 +51,7 @@ class CounterScreen extends StatelessWidget {
           print(counter);
         },
       ),
-      body:  Center(
+      body: Center(
         child: Text(
           "Counter : $counter",
           style: const TextStyle(

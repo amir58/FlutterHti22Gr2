@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/contacts/contacts_states.dart';
 import 'package:untitled/widgets/my_circle_icon_button.dart';
+
+import 'contacts_cubit.dart';
 
 class MyContact {
   String name;
@@ -11,46 +15,57 @@ class MyContact {
 class FavoritesScreen extends StatelessWidget {
   FavoritesScreen({Key? key}) : super(key: key);
 
-  List<MyContact> contacts = [
-    MyContact("Ali", "01116326522"),
-    MyContact("Salah", "01239603777"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView.builder(
-      itemCount: contacts.length,
-      itemBuilder: (context, index) {
-        return Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-              color: Colors.grey[200], borderRadius: BorderRadius.circular(15)),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      contacts[index].name,
-                      style: TextStyle(fontSize: 33),
+        body: BlocBuilder<ContactsCubit, ContactsStates>(
+      buildWhen: (previous, current) => current is GetFavoritesState,
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount: context.read<ContactsCubit>().favorites.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(15)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.read<ContactsCubit>().favorites[index]
+                              ['name'],
+                          style: TextStyle(fontSize: 33),
+                        ),
+                        Text(
+                          context.read<ContactsCubit>().favorites[index]
+                              ['phone'],
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ],
                     ),
-                    Text(
-                      contacts[index].phone,
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
+                  ),
+                  MyCircleIconButton(
+                    icon: Icons.favorite,
+                    color: Colors.blue,
+                    onPressed: () {
+                      context.read<ContactsCubit>().updateContact(
+                        favorite: context
+                            .read<ContactsCubit>()
+                            .favorites[index]['favorite'] == 0 ? 1 : 0,
+                        id: context.read<ContactsCubit>().favorites[index]
+                        ['id'],
+                      );
+                    },
+                  ),
+                ],
               ),
-              MyCircleIconButton(
-                icon: Icons.favorite,
-                color: Colors.blue,
-                onPressed: () {},
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     ));
